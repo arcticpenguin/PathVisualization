@@ -4,7 +4,8 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(400, 200), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Path Visualization");
+	tgui::Gui gui(window);
 
 	while (window.isOpen())
 	{
@@ -13,9 +14,14 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+
+			// Pass the event to all the widgets (if there would be widgets)
+			gui.handleEvent(event);
 		}
 
-		window.clear();
+		window.clear(sf::Color::White);
+		// Draw all created widgets
+		gui.draw();
 		window.display();
 	}
 
