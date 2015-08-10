@@ -81,8 +81,11 @@ void Path::readDataFromFile(string fileName)
 			{
 				//read one entry
 				getline(infs, line);
-				parsePathEntry(Utility::split(line, ","), index);
-				//_pathStrData.push_back(Utility::split(line,","));
+				vector<string> strEntry = Utility::split(line, ",");
+				if (strEntry.size() == ENTRY_SIZE)
+				{
+					parsePathEntry(strEntry, index);
+				}
 				index++;
 			}
 

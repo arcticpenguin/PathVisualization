@@ -5,9 +5,6 @@
 
 class TimeStamp {
 public:
-	inline TimeStamp()
-	{
-	}
 	int enter[3];
 	int exit[3];
 };

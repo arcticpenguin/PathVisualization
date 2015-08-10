@@ -1,5 +1,5 @@
 //VisManager: https://bitbucket.org/fmamimi/hapticchairio-vrsimulation/src/5df4ffe426d44f859d0bf93c6544a9493737704b/Assets/MyCode/Path/VisualizationManager.cs?at=master
-
+//Line Shape: https://github.com/SFML/SFML/wiki/Source:-Drawable-Line-Shape
 #ifndef _UTILITY_H_
 #define _UTILITY_H_
 
@@ -8,15 +8,19 @@
 //defines
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
+#define ENTRY_SIZE 7
 
 //include
 #include<SFML\Graphics.hpp>
+#include<SFML\Graphics\Shape.hpp>
 #include <SFML\Graphics\Rect.hpp>
 #include <SFML\System\Clock.hpp>
 #include<TGUI\TGUI.hpp>
 #include<iostream>
 #include<string>
 #include<vector>
+#include"Line.h"
+//#include"LineShape.h"
 #include "vec.h"
 
 using namespace std;
