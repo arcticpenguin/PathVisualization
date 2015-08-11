@@ -12,6 +12,7 @@
 
 //include
 #include<SFML\Graphics.hpp>
+#include<SFML\System.hpp>
 #include<SFML\Graphics\Shape.hpp>
 #include <SFML\Graphics\Rect.hpp>
 #include <SFML\System\Clock.hpp>
@@ -21,6 +22,7 @@
 #include<vector>
 #include"Line.h"
 //#include"LineShape.h"
+#include"DrawableLineShape.h"
 #include "vec.h"
 
 using namespace std;

@@ -13,5 +13,11 @@ public:
 private:
 	Path& _path;
 	sf::RenderWindow& _window;
+
+	sf::Transform _transform;
+	//polyline
+	sf::VertexArray _va;
+	static  sf::Color pathColor;
+	static int pathAlpha;
 };
 #endif

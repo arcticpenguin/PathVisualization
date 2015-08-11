@@ -60,13 +60,13 @@ void Path::readDataFromFile(string fileName)
 			//read three marks
 			for (int i = 0; i < 3; i++)
 			{
-				vec3 pos;
+				sf::Vector3f pos;
 				getline(infs, line);
 				vector<string> posStr = Utility::split(line, ",");
-				for (int j = 0; j < 3; j++)
-				{
-					pos[j] = atof(posStr[j].c_str());
-				}
+				pos.x = atof(posStr[0].c_str());
+				pos.y = atof(posStr[1].c_str());
+				pos.z = atof(posStr[2].c_str());
+
 				_markPositions.push_back(pos);
 			}
 
@@ -98,23 +98,31 @@ void Path::readDataFromFile(string fileName)
 	infs.close();
 }
 
+vector<sf::Vector3f>& Path::getPositions()
+{
+	return _positions;
+}
+
+vector<sf::Vector3f>& Path::getMarkPositions()
+{
+	return _markPositions;
+}
+
 void Path::parsePathEntry(vector<string> strEntry, int index)
 {
 	//point
-	vec3 point;
-	vec3 rot;
+	sf::Vector3f point;
+	sf::Vector3f rot;
 
 	//position
-	for (int i = 0; i < 3; i++)
-	{
-		point[i] = atof(strEntry[i].c_str());
-	}
+		point.x = atof(strEntry[0].c_str());
+		point.y = atof(strEntry[1].c_str());
+		point.z = atof(strEntry[2].c_str());
 
 	//rotation
-	for (int i = 3; i < 6; i++)
-	{
-		rot[i - 3] = atof(strEntry[i].c_str());
-	}
+		rot.x = atof(strEntry[3].c_str());
+		rot.y = atof(strEntry[4].c_str());
+		rot.z = atof(strEntry[5].c_str());
 
 	if (_side != -1)
 	{
@@ -123,7 +131,11 @@ void Path::parsePathEntry(vector<string> strEntry, int index)
 
 		if (_positions.size() > 1)
 		{
-			_traveledDist[_side] += vec::length(_positions[_positions.size() - 1] - _positions[_positions.size() - 2]);
+			sf::Vector3f p1 = _positions[_positions.size() - 2];
+			sf::Vector3f p2 = _positions[_positions.size() - 1];
+			vec3 v1(p1.x, p1.y, p1.z);
+			vec3 v2(p2.x, p2.y, p2.z);
+			_traveledDist[_side] += vec::length(v1 - v2);
 		}
 	}
 

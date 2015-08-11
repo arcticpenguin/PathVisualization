@@ -16,18 +16,21 @@ public:
 	void readDataFromFile(string fileName);
 	void reset();
 
+	vector<sf::Vector3f>& getPositions();
+	vector<sf::Vector3f>& getMarkPositions();
+
 private:
 	void parsePathEntry(vector<string> strEntry, int index);
 
 
-	vector<vec3> _markPositions;
-	vector<vec3> _positions;
-	vector<vec3> _rotations;
+	vector<sf::Vector3f> _markPositions;
+	vector<sf::Vector3f> _positions;
+	vector<sf::Vector3f> _rotations;
 
 	vector<vector<string>> _pathStrData;
-	int _side; //??????
+	int _side;
 	TimeStamp _timeStamp;
-	vec3 _realStop;
+	sf::Vector3f _realStop;
 
 	//calculation variables
 	float _traveledDist[3];
