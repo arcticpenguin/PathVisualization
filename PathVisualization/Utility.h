@@ -6,6 +6,7 @@
 #define WINDOW
 
 //defines
+#define PI 3.141592653589793
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
 #define ENTRY_SIZE 7

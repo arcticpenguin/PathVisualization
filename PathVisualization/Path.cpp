@@ -8,6 +8,9 @@ void Path::reset()
 		_markPositions.clear();
 		_positions.clear();
 		_rotations.clear();
+		_markPositions2D.clear();
+		_positions2D.clear();
+		_rotations2D.clear();
 
 		for (int index = 0; index < 3; index++)
 		{
@@ -68,6 +71,7 @@ void Path::readDataFromFile(string fileName)
 				pos.z = atof(posStr[2].c_str());
 
 				_markPositions.push_back(pos);
+				_markPositions2D.push_back(sf::Vector2f(pos.x, pos.z));
 			}
 
 		}
@@ -103,10 +107,22 @@ vector<sf::Vector3f>& Path::getPositions()
 	return _positions;
 }
 
+vector<sf::Vector2f>& Path::getPositions2D()
+{
+	return _positions2D;
+}
+
 vector<sf::Vector3f>& Path::getMarkPositions()
 {
 	return _markPositions;
 }
+
+vector<sf::Vector2f>& Path::getMarkPositions2D()
+{
+	return _markPositions2D;
+}
+
+
 
 void Path::parsePathEntry(vector<string> strEntry, int index)
 {
@@ -127,7 +143,9 @@ void Path::parsePathEntry(vector<string> strEntry, int index)
 	if (_side != -1)
 	{
 		_positions.push_back(point);
+		_positions2D.push_back(sf::Vector2f(point.x, point.z));
 		_rotations.push_back(rot);
+		_rotations2D.push_back(sf::Vector2f(rot.x, rot.z));
 
 		if (_positions.size() > 1)
 		{
