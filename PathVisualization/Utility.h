@@ -26,9 +26,10 @@
 #include"DrawableLineShape.h"
 #include "vec.h"
 #include <sys/types.h>
-//#include <dirent.h>
+#include <dirent.h>
 #include "tinydir.h"
 #include <windows.h>
+
 using namespace std;
 
 
@@ -63,32 +64,22 @@ public:
 	{
 		vector<string> names;
 
-		tinydir_dir dir;
-		tinydir_open(&dir, folder.c_str());
-		int i = 0;
-		while (dir.has_next)
+		DIR *dir;
+		struct dirent *de;
+
+		dir = opendir(folder.c_str()); /*your directory*/
+		while (dir)
 		{
-			i++;
-			tinydir_file file;
-			if (!tinydir_readfile(&dir, &file) && i > 2) //why? "." ".."
-			{
-				string str(file.name);
-				names.push_back(str);
-			}
-			
-			//for directories
-			//printf("%s", file.name);
-			/*if (file.is_dir)
-			{
-				printf("/");
-			}
-			printf("\n");*/
-
-			tinydir_next(&dir);
-			
+			de = readdir(dir);
+			if (!de) break;
+			string str(de->d_name);
+			if (str == "." || str == "..")
+				continue;
+			names.push_back(str);
+			//printf("%i %s\n", de->d_type, de->d_name);
 		}
+		closedir(dir);
 
-		tinydir_close(&dir);
 
 		return names;
 	}

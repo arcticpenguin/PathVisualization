@@ -9,10 +9,14 @@ class PathView
 public:
 	PathView(Path& path, sf::RenderWindow& window);
 	void draw();
+	bool isVisible();
+	void setVisibility(bool visible);
+	Path& getPath();
 
 private:
 	float calculateAngleToVerticalAxis();
 
+	bool _isVisible;
 	Path& _path;
 	sf::RenderWindow& _window;
 

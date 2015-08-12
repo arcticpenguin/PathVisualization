@@ -9,6 +9,7 @@ public:
 	Visualizer(string logDir, sf::RenderWindow& window);
 	void draw();
 	void processEvent(sf::Event evt);
+	void filter(int conditionIndex, int trialIndex);
 
 private:
 	void initPathsFromDir(string dir);

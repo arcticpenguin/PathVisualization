@@ -13,7 +13,7 @@ class Path
 {
 public:
 	Path(){}
-	void readDataFromFile(string fileName);
+	void readDataFromFile(string filePath);
 	void reset();
 	//original
 	vector<sf::Vector3f>& getPositions();
@@ -21,10 +21,22 @@ public:
 	//2D
 	vector<sf::Vector2f>& getMarkPositions2D();
 	vector<sf::Vector2f>& getPositions2D();
+	int getConditionIndex();
+	int getTrialIndex();
 
 private:
 	void parsePathEntry(vector<string> strEntry, int index);
+	void parseTitle(string fileName);
 	
+	//basic info
+	string _fileName;
+	int _subjectIndex;
+	int _conditionSequence;
+	int _conditionIndex;
+	int _trialSequence;
+	int _trialIndex;
+	string _date;
+	string _time;
 
 	//data
 	//original

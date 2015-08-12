@@ -11,10 +11,8 @@ int main()
 	tgui::Gui gui(window); 
 
 	//////////////////////////////////Test///////////////////////////////////
-	//Path path;
-	//path.readDataFromFile("Res/RawData/First Study/Desktop Subject0 Condition4 7 Trial1 5 2015_4_20 17_8_54.txt");
-	//PathView pathView(path, window);
 	Visualizer visualizer("Res/RawData/Test/", window);
+	visualizer.filter(1, 1);
 
 	while (window.isOpen())
 	{
@@ -29,10 +27,11 @@ int main()
 		}
 
 		window.clear(sf::Color::White);
+
 		// Draw all created widgets
 		gui.draw();
 		visualizer.draw();
-		//pathView.draw();
+
 		window.display();
 	}
 

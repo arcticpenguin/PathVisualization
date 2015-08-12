@@ -25,20 +25,28 @@ Parameters:		string fileName
 
 Return:				void.
 **************************************************/
-void Path::readDataFromFile(string fileName)
+void Path::readDataFromFile(string filePath)
 {
 	reset();
 
 	//open file
 	fstream infs;
-	infs.open(fileName, ios::in);
+	infs.open(filePath, ios::in);
 
 	if (infs.fail())
 	{
-		Debug::Error("Cannot open file " + fileName);
+		Debug::Error("Cannot open file " + filePath);
 	}
 
-	//process file
+	//store fileName
+	vector<string> pathSplit = Utility::split(filePath, "/");
+	pathSplit = Utility::split(pathSplit[pathSplit.size() - 1], ".");
+	_fileName = pathSplit[0];
+
+	//read title
+	parseTitle(_fileName);
+
+	//process file log
 	while (infs.good())
 	{
 		string line;
@@ -100,6 +108,37 @@ void Path::readDataFromFile(string fileName)
 
 	//close file
 	infs.close();
+}
+
+void Path::parseTitle(string fileName)
+{
+	//Example: [0]data\log\Oculus [1]Subject0 [2]Condition1 [3]1 [4]Trial1 [5]0 [6]2015_4_16 [7]11_3_34
+	vector<string> fileStrs = Utility::split(fileName, " ");
+	//subject: can be one or two digits
+	fileStrs[1] = fileStrs[1].erase(0,7); //Remove "Subject"
+	_subjectIndex = atoi(fileStrs[1].c_str());
+
+	//condition
+	_conditionSequence = atoi(string(1, fileStrs[2][9]).c_str());
+	_conditionIndex = atoi(string(1, fileStrs[3][0]).c_str());
+	//trial
+	_trialSequence = atoi(string(1, fileStrs[4][5]).c_str());
+	_trialIndex = atoi(string(1, fileStrs[5][0]).c_str());
+	////date
+	_date = fileStrs[6];
+	////time
+	_time = fileStrs[7];
+
+}
+
+int Path::getConditionIndex()
+{
+	return _conditionIndex;
+}
+
+int Path::getTrialIndex()
+{
+	return _trialIndex;
 }
 
 vector<sf::Vector3f>& Path::getPositions()

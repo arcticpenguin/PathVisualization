@@ -8,6 +8,9 @@ PathView::PathView(Path& path, sf::RenderWindow& window) :
 _path(path),
 _window(window)
 {
+	//basic settings
+	_isVisible = false;
+
 	//path
 	_va.setPrimitiveType(sf::LinesStrip);
 	pathColor.a = pathAlpha;
@@ -39,14 +42,29 @@ _window(window)
 	vector<sf::Vector3f>& marks = _path.getMarkPositions();
 	
 	//4. translate to the right position
-	_transform.translate(384, 512);
+	_transform.translate(384, 540);
 	//3. scale
-	_transform.scale(3, 3);
+	_transform.scale(3.8, 3.8);
 	//2. rotate to origin
 	calculateAngleToVerticalAxis();
 	_transform.rotate(_angleToVerticalAxis, sf::Vector2f(0, 0));
 	//1. translate to origin
 	_transform.translate(-marks[0].x, -marks[0].z);
+}
+
+bool PathView::isVisible()
+{
+	return _isVisible;
+}
+
+void PathView::setVisibility(bool visible)
+{
+	_isVisible = visible;
+}
+
+Path& PathView::getPath()
+{
+	return _path;
 }
 
 float PathView::calculateAngleToVerticalAxis()
