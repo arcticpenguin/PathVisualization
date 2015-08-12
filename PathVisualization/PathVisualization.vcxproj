@@ -88,6 +88,7 @@
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="PathView.cpp" />
     <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="Visualizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DrawableLineShape.h" />
@@ -95,8 +96,10 @@
     <ClInclude Include="LineShape.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="PathView.h" />
+    <ClInclude Include="tinydir.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="vec.h" />
+    <ClInclude Include="Visualizer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

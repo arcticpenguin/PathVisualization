@@ -38,13 +38,13 @@ _window(window)
 	//transform
 	vector<sf::Vector3f>& marks = _path.getMarkPositions();
 	
-	//4. translate to the position
+	//4. translate to the right position
 	_transform.translate(384, 512);
 	//3. scale
 	_transform.scale(3, 3);
 	//2. rotate to origin
 	calculateAngleToVerticalAxis();
-	_transform.rotate(-_angleToVerticalAxis, sf::Vector2f(0, 0));
+	_transform.rotate(_angleToVerticalAxis, sf::Vector2f(0, 0));
 	//1. translate to origin
 	_transform.translate(-marks[0].x, -marks[0].z);
 }
@@ -56,8 +56,13 @@ float PathView::calculateAngleToVerticalAxis()
 	vec2 v2(segmentVec.x, segmentVec.y);
 	vec2 v1(0, -1);
 	float cosA = vec::dot(v1, v2) / (vec::length(v1) * vec::length(v2));
-	_angleToVerticalAxis = acosf(cosA) * 180 / PI;
-	cout << "Angle: " << _angleToVerticalAxis << endl;
+	//sign
+	vec3 v3_1(v1, 0);
+	vec3 v3_2(v2, 0);
+	int sign = vec::cross(v3_2, v3_1).z >= 0 ? 1 : -1;
+	_angleToVerticalAxis = sign * acosf(cosA) * 180 / PI;
+	
+	//cout << "Angle: " << _angleToVerticalAxis << endl;
 	return _angleToVerticalAxis;
 }
 

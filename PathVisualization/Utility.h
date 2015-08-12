@@ -25,7 +25,10 @@
 //#include"LineShape.h"
 #include"DrawableLineShape.h"
 #include "vec.h"
-
+#include <sys/types.h>
+//#include <dirent.h>
+#include "tinydir.h"
+#include <windows.h>
 using namespace std;
 
 
@@ -56,12 +59,47 @@ public:
 		return result;
 	}
 
+	inline static vector<string> getAllFileNamesWithinFolder(string folder)
+	{
+		vector<string> names;
+
+		tinydir_dir dir;
+		tinydir_open(&dir, folder.c_str());
+		int i = 0;
+		while (dir.has_next)
+		{
+			i++;
+			tinydir_file file;
+			if (!tinydir_readfile(&dir, &file) && i > 2) //why? "." ".."
+			{
+				string str(file.name);
+				names.push_back(str);
+			}
+			
+			//for directories
+			//printf("%s", file.name);
+			/*if (file.is_dir)
+			{
+				printf("/");
+			}
+			printf("\n");*/
+
+			tinydir_next(&dir);
+			
+		}
+
+		tinydir_close(&dir);
+
+		return names;
+	}
+
 };
 
 class Debug
 {
 public:
 	static void Error(string msg);
+	static void Log(string msg);
 };
 
 
