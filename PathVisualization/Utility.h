@@ -9,7 +9,10 @@
 #define PI 3.141592653589793
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
+#define CANVAS_WIDTH 768
+#define CANVAS_HEIGHT 768
 #define ENTRY_SIZE 7
+#define THEME_CONFIG_FILE "Res/TGUI/widgets/Black.conf"
 
 //include
 #include<SFML\Graphics.hpp>
