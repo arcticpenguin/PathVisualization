@@ -7,7 +7,13 @@ _window(window)
 	//load files from dir
 	initPathsFromDir(logDir);
 	_currentIndex = 0;
+	_drawMode = "Triangle";
 	
+}
+
+void Visualizer::setDrawMode(string mode)
+{
+	_drawMode = mode;
 }
 
 void Visualizer::initPathsFromDir(string dir)
@@ -26,11 +32,14 @@ void Visualizer::initPathsFromDir(string dir)
 		PathView pv(_paths[i], _window);
 		_pathViews.push_back(pv);
 	}
+
+	
 	return;
 }
 
-void Visualizer::filter(int conditionIndex, int trialIndex)
+int Visualizer::filter(int conditionIndex, int trialIndex)
 {
+	int num = 0;
 	for (int i = 0; i < _pathViews.size(); i++)
 	{
 		_pathViews[i].setVisibility(false);
@@ -38,8 +47,10 @@ void Visualizer::filter(int conditionIndex, int trialIndex)
 		if (path.getConditionIndex() == conditionIndex && path.getTrialIndex() == trialIndex)
 		{
 			_pathViews[i].setVisibility(true);
+			num++;
 		}
 	}
+	return num;
 }
 
 void Visualizer::draw()
@@ -48,7 +59,7 @@ void Visualizer::draw()
 	{
 		if (_pathViews[i].isVisible())
 		{
-			_pathViews[i].draw();
+			_pathViews[i].draw(_drawMode);
 		}
 	}
 }

@@ -8,10 +8,11 @@ class PathView
 {
 public:
 	PathView(Path& path, sf::RenderWindow& window);
-	void draw();
+	void draw(string mode = "Triangle");
 	bool isVisible();
 	void setVisibility(bool visible);
 	Path& getPath();
+	
 
 private:
 	float calculateAngleToVerticalAxis();
@@ -26,6 +27,9 @@ private:
 	sf::VertexArray _va;
 	static  sf::Color pathColor;
 	static int pathAlpha;
+	//triangle
+	vector<sf::ConvexShape> _orients;
+
 	//marks
 	vector<sf::CircleShape> markViews;
 	//for transform

@@ -7,7 +7,7 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Path Visualization");
+	sf::RenderWindow window(sf::VideoMode(WINDOW_HEIGHT, WINDOW_HEIGHT), "Path Visualization");
 	/////////////////////////////////Panel///////////////////////////////////
 	//background
 	sf::RectangleShape background;
@@ -70,48 +70,63 @@ int main()
 	button->setPosition(CANVAS_WIDTH + 10, 500);
 	button->setText("Screenshot");
 	button->setCallbackId(1);
-	button->setTextSize(17);
+	button->setTextSize(15);
 	button->bindCallback(tgui::Button::LeftMouseClicked);
 	button->setSize(90, 50);
 
 	int conditionIndex = 0;
 	int trialIndex = 7;
 	int timer = 0;
+	int timerEach = 5;
 
 	/////////////////////////////////Visualizer///////////////////////////////////
+	//Visualizer visualizer("Res/RawData/Test/", window);
 	Visualizer visualizer("Res/RawData/First Study/", window);
+	//Visualizer visualizer("Res/RawData/Second Study/", window);
+
 	visualizer.filter(1, 1);
+	//visualizer.setDrawMode("Polyline");
+	visualizer.setDrawMode("Triangle");
 
 	while (window.isOpen())
 	{
 		
-		
+		//screenshot export
 		if (timer > 10)
 		{
 			//auto
 			if (conditionIndex <= 8 && trialIndex <= 7)
 			{
-
-				if (conditionIndex > 0)
+				if (timerEach <= 0)
 				{
-					sf::Image screenshot = window.capture();
-					std::stringstream filename;
-					filename << "Res/screenshots/cond " << conditionIndex << " layout " << trialIndex << ".jpg";
-					screenshot.saveToFile(filename.str());
-				}
 
-				//add next
-				if (trialIndex == 7)
-				{
-					conditionIndex++;
-					trialIndex = 0;
+					if (conditionIndex > 0)
+					{
+						sf::Image screenshot = window.capture();
+						std::stringstream filename;
+						filename << "Res/screenshots/cond " << conditionIndex << " layout " << trialIndex << ".jpg";
+						screenshot.saveToFile(filename.str());
+						
+					}
+
+					//add next
+					if (trialIndex == 7)
+					{
+						conditionIndex++;
+						trialIndex = 0;
+					}
+					else
+					{
+						trialIndex++;
+					}
+
+					int num = visualizer.filter(conditionIndex, trialIndex);
+					timerEach = 5;
 				}
 				else
 				{
-					trialIndex++;
+					timerEach--;
 				}
-
-				visualizer.filter(conditionIndex, trialIndex);
 			}
 		}
 		else
@@ -131,15 +146,16 @@ int main()
 			gui.handleEvent(event);
 		}
 
-		if (conditionList->getSelectedItem() != selectedCondition || trialList->getSelectedItem() != selectedTrial)
-		{
-			string condition = conditionList->getSelectedItem();
-			//cout << "Selected: " << string(conditionList->getSelectedItem()) << endl;
-			selectedCondition = condition;
-			string trial = trialList->getSelectedItem();
-			selectedTrial = trial;
-			visualizer.filter(atoi(condition.c_str()), atoi(trial.c_str()));
-		}
+		//for gui real-time interaction
+		//if (conditionList->getSelectedItem() != selectedCondition || trialList->getSelectedItem() != selectedTrial)
+		//{
+		//	string condition = conditionList->getSelectedItem();
+		//	//cout << "Selected: " << string(conditionList->getSelectedItem()) << endl;
+		//	selectedCondition = condition;
+		//	string trial = trialList->getSelectedItem();
+		//	selectedTrial = trial;
+		//	visualizer.filter(atoi(condition.c_str()), atoi(trial.c_str()));
+		//}
 
 		tgui::Callback callback;
 		while (gui.pollCallback(callback))
@@ -151,10 +167,6 @@ int main()
 				std::stringstream filename;
 				filename << "Res/screenshots/cond " << selectedCondition<<" layout "<<selectedTrial << ".jpg";
 				screenshot.saveToFile(filename.str());
-				/*if (callback.text == "Item 2")
-					window.close();
-				*/
-				//listBox->
 			}
 		}
 
@@ -172,7 +184,6 @@ int main()
 
 		
 		}
-	//}
 
 
 	return 0;

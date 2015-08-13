@@ -10,7 +10,7 @@ void Path::reset()
 		_rotations.clear();
 		_markPositions2D.clear();
 		_positions2D.clear();
-		_rotations2D.clear();
+		_rotationsY.clear();
 
 		for (int index = 0; index < 3; index++)
 		{
@@ -151,14 +151,29 @@ vector<sf::Vector2f>& Path::getPositions2D()
 	return _positions2D;
 }
 
+vector<float>& Path::getRotationsY()
+{
+	return _rotationsY;
+}
+
 vector<sf::Vector3f>& Path::getMarkPositions()
 {
 	return _markPositions;
 }
 
+vector<float>& Path::getSpeeds()
+{
+	return _speeds;
+}
+
 vector<sf::Vector2f>& Path::getMarkPositions2D()
 {
 	return _markPositions2D;
+}
+
+int Path::nodeCount()
+{
+	return _positions.size();
 }
 
 
@@ -184,7 +199,17 @@ void Path::parsePathEntry(vector<string> strEntry, int index)
 		_positions.push_back(point);
 		_positions2D.push_back(sf::Vector2f(point.x, point.z));
 		_rotations.push_back(rot);
-		_rotations2D.push_back(sf::Vector2f(rot.x, rot.z));
+		_rotationsY.push_back(rot.y);
+		if (_positions.size() < 2)
+		{
+			_speeds.push_back(0);
+		}
+		else
+		{
+			vec2 v1(point.x, point.z);
+			vec2 v2(_positions2D[_positions.size() - 2].x, _positions2D[_positions.size() - 2].y);
+			_speeds.push_back(vec::length(v1 - v2));
+		}
 
 		if (_positions.size() > 1)
 		{

@@ -8,8 +8,9 @@ class Visualizer
 public:
 	Visualizer(string logDir, sf::RenderWindow& window);
 	void draw();
+	void setDrawMode(string mode);
 	void processEvent(sf::Event evt);
-	void filter(int conditionIndex, int trialIndex);
+	int filter(int conditionIndex, int trialIndex);
 
 private:
 	void initPathsFromDir(string dir);
@@ -18,6 +19,7 @@ private:
 	vector<string> _logFiles;
 	vector<Path> _paths;
 	vector<PathView> _pathViews;
+	string _drawMode;
 
 	int _currentIndex;
 };
