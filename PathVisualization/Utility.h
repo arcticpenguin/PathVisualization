@@ -13,6 +13,7 @@
 #define CANVAS_HEIGHT 768
 #define ENTRY_SIZE 7
 #define THEME_CONFIG_FILE "Res/TGUI/widgets/Black.conf"
+#define SELECT_ALL -1
 
 //include
 #include<SFML\Graphics.hpp>

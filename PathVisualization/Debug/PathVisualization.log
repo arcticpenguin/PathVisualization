@@ -1,20 +1,20 @@
-﻿Build started 8/13/2015 3:33:53 PM.
-     1>Project "D:\Projects\Path Visualization\PathVisualization\PathVisualization.vcxproj" on node 2 (Build target(s)).
+﻿Build started 8/30/2015 4:22:36 PM.
+     1>Project "C:\Users\Mi\Documents\MyProjects\PathVisualization\PathVisualization\PathVisualization\PathVisualization.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\Import\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
          Main.cpp
-     1>d:\projects\path visualization\pathvisualization\utility.h(53): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mi\documents\myprojects\pathvisualization\pathvisualization\pathvisualization\utility.h(54): warning C4018: '<' : signed/unsigned mismatch
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Projects\Path Visualization\Debug\PathVisualization.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\Import\lib "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "tgui-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Projects\Path Visualization\Debug\PathVisualization.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Projects\Path Visualization\Debug\PathVisualization.lib" /MACHINE:X86 Debug\DrawableLineShape.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mi\Documents\MyProjects\PathVisualization\PathVisualization\Debug\PathVisualization.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\Import\lib "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "tgui-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Mi\Documents\MyProjects\PathVisualization\PathVisualization\Debug\PathVisualization.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mi\Documents\MyProjects\PathVisualization\PathVisualization\Debug\PathVisualization.lib" /MACHINE:X86 Debug\DrawableLineShape.obj
          Debug\LineShape.obj
          Debug\Main.obj
          Debug\Path.obj
          Debug\PathView.obj
          Debug\Utility.obj
          Debug\Visualizer.obj
-         PathVisualization.vcxproj -> D:\Projects\Path Visualization\Debug\PathVisualization.exe
-     1>Done Building Project "D:\Projects\Path Visualization\PathVisualization\PathVisualization.vcxproj" (Build target(s)).
+         PathVisualization.vcxproj -> C:\Users\Mi\Documents\MyProjects\PathVisualization\PathVisualization\Debug\PathVisualization.exe
+     1>Done Building Project "C:\Users\Mi\Documents\MyProjects\PathVisualization\PathVisualization\PathVisualization\PathVisualization.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:03.64
+Time Elapsed 00:00:01.94

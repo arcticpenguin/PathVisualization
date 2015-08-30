@@ -141,6 +141,11 @@ int Path::getTrialIndex()
 	return _trialIndex;
 }
 
+int Path::getSubjectIndex()
+{
+	return _subjectIndex;
+}
+
 vector<sf::Vector3f>& Path::getPositions()
 {
 	return _positions;

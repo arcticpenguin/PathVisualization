@@ -5,6 +5,10 @@
 
 #ifdef WINDOW
 
+#define MAX_CONDITION 4
+#define MAX_TRIAL 3 //index 0,1...
+#define MAX_SUBJECT 15
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(WINDOW_HEIGHT, WINDOW_HEIGHT), "Path Visualization");
@@ -74,17 +78,19 @@ int main()
 	button->bindCallback(tgui::Button::LeftMouseClicked);
 	button->setSize(90, 50);
 
-	int conditionIndex = 0;
-	int trialIndex = 7;
+	int conditionIndex = 1;
+	int trialIndex = 0;
+	int subjectIndex = 0;
 	int timer = 0;
 	int timerEach = 5;
+	int filteredNumber = 1;
 
 	/////////////////////////////////Visualizer///////////////////////////////////
-	//Visualizer visualizer("Res/RawData/Test/", window);
-	Visualizer visualizer("Res/RawData/First Study/", window);
+	Visualizer visualizer("Res/RawData/Test/", window);
+	//Visualizer visualizer("Res/RawData/First Study/", window);
 	//Visualizer visualizer("Res/RawData/Second Study/", window);
 
-	visualizer.filter(1, 1);
+	//visualizer.filter(4, 3, 11);
 	//visualizer.setDrawMode("Polyline");
 	visualizer.setDrawMode("Triangle");
 
@@ -92,35 +98,48 @@ int main()
 	{
 		
 		//screenshot export
-		if (timer > 10)
+		if (timer < 10) //temp
 		{
+			visualizer.filter(conditionIndex, trialIndex, subjectIndex);
+			
+
 			//auto
-			if (conditionIndex <= 8 && trialIndex <= 7)
+			if (conditionIndex <= MAX_CONDITION && trialIndex <= MAX_TRIAL && subjectIndex <= MAX_SUBJECT)
 			{
 				if (timerEach <= 0)
 				{
-
-					if (conditionIndex > 0)
+					//screenshot
+					if (filteredNumber)
 					{
 						sf::Image screenshot = window.capture();
 						std::stringstream filename;
-						filename << "Res/screenshots/cond " << conditionIndex << " layout " << trialIndex << ".jpg";
+						filename << "Res/screenshots/sub "<<subjectIndex<<" cond " << conditionIndex << " layout " << trialIndex << ".jpg";
 						screenshot.saveToFile(filename.str());
 						
 					}
 
 					//add next
-					if (trialIndex == 7)
+					if (conditionIndex == MAX_CONDITION && trialIndex == MAX_TRIAL)
 					{
-						conditionIndex++;
+						subjectIndex++;
+						conditionIndex = 1;
 						trialIndex = 0;
 					}
-					else
+					else 
 					{
-						trialIndex++;
+						if (trialIndex == MAX_TRIAL)
+						{
+							conditionIndex++;
+							trialIndex = 0;
+						}
+						else
+						{
+							trialIndex++;
+						}
 					}
 
-					int num = visualizer.filter(conditionIndex, trialIndex);
+					filteredNumber = visualizer.filter(conditionIndex, trialIndex, subjectIndex);
+					cout << subjectIndex<<" "<<conditionIndex<<" "<<trialIndex<<" Number: " << filteredNumber << endl;
 					timerEach = 5;
 				}
 				else
@@ -176,7 +195,6 @@ int main()
 		visualizer.draw();
 		/////////////////////////////////Panel///////////////////////////////////
 		// Draw all created widgets
-		
 		
 		window.draw(background);
 		

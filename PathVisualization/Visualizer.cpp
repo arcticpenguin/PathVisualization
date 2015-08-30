@@ -37,7 +37,7 @@ void Visualizer::initPathsFromDir(string dir)
 	return;
 }
 
-int Visualizer::filter(int conditionIndex, int trialIndex)
+int Visualizer::filter(int conditionIndex, int trialIndex, int subjectIndex)
 {
 	int num = 0;
 	for (int i = 0; i < _pathViews.size(); i++)
@@ -46,8 +46,12 @@ int Visualizer::filter(int conditionIndex, int trialIndex)
 		Path& path = _pathViews[i].getPath();
 		if (path.getConditionIndex() == conditionIndex && path.getTrialIndex() == trialIndex)
 		{
-			_pathViews[i].setVisibility(true);
-			num++;
+			if (subjectIndex == SELECT_ALL || subjectIndex == path.getSubjectIndex())
+			{
+				_pathViews[i].setVisibility(true);
+				num++;
+			}
+			
 		}
 	}
 	return num;

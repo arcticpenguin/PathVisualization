@@ -25,6 +25,7 @@ public:
 	vector<float>& getRotationsY();
 	int getConditionIndex();
 	int getTrialIndex();
+	int getSubjectIndex();
 	int nodeCount();
 
 private:

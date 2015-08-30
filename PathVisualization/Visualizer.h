@@ -10,7 +10,7 @@ public:
 	void draw();
 	void setDrawMode(string mode);
 	void processEvent(sf::Event evt);
-	int filter(int conditionIndex, int trialIndex);
+	int filter(int conditionIndex, int trialIndex, int subjectIndex = SELECT_ALL);
 
 private:
 	void initPathsFromDir(string dir);
