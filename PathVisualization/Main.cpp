@@ -8,10 +8,13 @@
 #define MAX_CONDITION 4
 #define MAX_TRIAL 3 //index 0,1...
 #define MAX_SUBJECT 15
+#define DATA_FOLDER "Res/RawData/Test/"
+//#define DATA_FOLDER "Res/RawData/First Study/"
+//#define DATA_FOLDER "Res/RawData/Second Study/"
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(WINDOW_HEIGHT, WINDOW_HEIGHT), "Path Visualization");
+	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Path Visualization");
 	/////////////////////////////////Panel///////////////////////////////////
 	//background
 	sf::RectangleShape background;
@@ -86,72 +89,72 @@ int main()
 	int filteredNumber = 1;
 
 	/////////////////////////////////Visualizer///////////////////////////////////
-	Visualizer visualizer("Res/RawData/Test/", window);
-	//Visualizer visualizer("Res/RawData/First Study/", window);
-	//Visualizer visualizer("Res/RawData/Second Study/", window);
+	Visualizer visualizer(DATA_FOLDER, window);
 
-	//visualizer.filter(4, 3, 11);
+	visualizer.filter(4, 3, 11);
 	//visualizer.setDrawMode("Polyline");
 	visualizer.setDrawMode("Triangle");
 
 	while (window.isOpen())
 	{
 		
+		/////////////////////////////////Batch Begin///////////////////////////////////
 		//screenshot export
-		if (timer < 10) //temp
-		{
-			visualizer.filter(conditionIndex, trialIndex, subjectIndex);
-			
+		//if (timer < -10) //temp
+		//{
+		//	visualizer.filter(conditionIndex, trialIndex, subjectIndex);
+		//	
 
-			//auto
-			if (conditionIndex <= MAX_CONDITION && trialIndex <= MAX_TRIAL && subjectIndex <= MAX_SUBJECT)
-			{
-				if (timerEach <= 0)
-				{
-					//screenshot
-					if (filteredNumber)
-					{
-						sf::Image screenshot = window.capture();
-						std::stringstream filename;
-						filename << "Res/screenshots/sub "<<subjectIndex<<" cond " << conditionIndex << " layout " << trialIndex << ".jpg";
-						screenshot.saveToFile(filename.str());
-						
-					}
+		//	//auto
+		//	if (conditionIndex <= MAX_CONDITION && trialIndex <= MAX_TRIAL && subjectIndex <= MAX_SUBJECT)
+		//	{
+		//		if (timerEach <= 0)
+		//		{
+		//			//screenshot
+		//			if (filteredNumber)
+		//			{
+		//				sf::Image screenshot = window.capture();
+		//				std::stringstream filename;
+		//				filename << "Res/screenshots/sub "<<subjectIndex<<" cond " << conditionIndex << " layout " << trialIndex << ".jpg";
+		//				screenshot.saveToFile(filename.str());
+		//				
+		//			}
 
-					//add next
-					if (conditionIndex == MAX_CONDITION && trialIndex == MAX_TRIAL)
-					{
-						subjectIndex++;
-						conditionIndex = 1;
-						trialIndex = 0;
-					}
-					else 
-					{
-						if (trialIndex == MAX_TRIAL)
-						{
-							conditionIndex++;
-							trialIndex = 0;
-						}
-						else
-						{
-							trialIndex++;
-						}
-					}
+		//			//add next
+		//			if (conditionIndex == MAX_CONDITION && trialIndex == MAX_TRIAL)
+		//			{
+		//				subjectIndex++;
+		//				conditionIndex = 1;
+		//				trialIndex = 0;
+		//			}
+		//			else 
+		//			{
+		//				if (trialIndex == MAX_TRIAL)
+		//				{
+		//					conditionIndex++;
+		//					trialIndex = 0;
+		//				}
+		//				else
+		//				{
+		//					trialIndex++;
+		//				}
+		//			}
 
-					filteredNumber = visualizer.filter(conditionIndex, trialIndex, subjectIndex);
-					cout << subjectIndex<<" "<<conditionIndex<<" "<<trialIndex<<" Number: " << filteredNumber << endl;
-					timerEach = 5;
-				}
-				else
-				{
-					timerEach--;
-				}
-			}
-		}
-		else
-		{
-			timer++;
-		}
+		//			filteredNumber = visualizer.filter(conditionIndex, trialIndex, subjectIndex);
+		//			cout << subjectIndex<<" "<<conditionIndex<<" "<<trialIndex<<" Number: " << filteredNumber << endl;
+		//			timerEach = 5;
+		//		}
+		//		else
+		//		{
+		//			timerEach--;
+		//		}
+		//	}
+		//}
+		//else
+		//{
+		//	timer++;
+		//}
+		/////////////////////////////////Batch End///////////////////////////////////
 		
 
 		sf::Event event;

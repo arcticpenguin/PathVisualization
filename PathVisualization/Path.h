@@ -19,14 +19,16 @@ public:
 	vector<sf::Vector3f>& getPositions();
 	vector<sf::Vector3f>& getMarkPositions();
 	vector<float>& getSpeeds();
-	//2D
-	vector<sf::Vector2f>& getMarkPositions2D();
-	vector<sf::Vector2f>& getPositions2D();
-	vector<float>& getRotationsY();
 	int getConditionIndex();
 	int getTrialIndex();
 	int getSubjectIndex();
 	int nodeCount();
+	//2D
+	vector<sf::Vector2f>& getMarkPositions2D();
+	vector<sf::Vector2f>& getPositions2D();
+	vector<float>& getRotationsY();
+	//Calculation
+	void calculatePath();
 
 private:
 	void parsePathEntry(vector<string> strEntry, int index);
@@ -60,7 +62,19 @@ private:
 	
 
 	//calculation variables
+	int _alpha;
+	string _dir;
+	float _sides[3];
+	float _times[3];
+	float _closeness;
+	float _signedDistanceError;
+	float _absDistanceError;
+	float _signedRelativeDistError;
+	float _absRelativeDistError;
+	float _signedAngleError;
+	float _absAngleError;
 	float _traveledDist[3];
+	
 };
 
 #endif

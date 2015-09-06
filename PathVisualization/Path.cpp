@@ -265,3 +265,48 @@ void Path::parsePathEntry(vector<string> strEntry, int index)
 		_timeStamp.enter[0] = index;
 	}
 }
+
+void Path::calculatePath()
+{
+	//Date, Time, 
+	//ID, C-Seq., C-No., T-Seq., T-No., Alpha, Dir, 
+	//S1, S2, S3, S-All, T1, T2, T3, T-All,	 
+	//Closeness, Signed Distance Error, Absolute Distance Error, Signed Relative Distance Error, Absolute Relative Distance Error, 
+	//Signed Traveled Error, Absolute Traveled Error, 
+	//Signed Angle Error, Absolute Angle Error, 
+	//Trv1, Trv2, Trv3, Trv-All
+
+	/*int _alpha;
+	string _dir;
+	float _traveledDist[3];*/
+
+	vec3 realStop(_realStop.x, _realStop.z, 0);
+	vec3 markPos[3];
+	for (int i = 0; i < 3; i++)
+	{
+		markPos[i] = vec3(_markPositions[i].x, _markPositions[i].z, 0);
+	}
+
+	//_sides and _times
+	for (int index = 0; index < 3; index++)
+	{
+		_sides[index] = vec::length(markPos[(index + 1) % 3] - markPos[index]);
+		_times[index] = (_timeStamp.enter[(index + 1) % 3] - _timeStamp.exit[index]) * 0.4;
+	}
+	//_closeness
+	_closeness = vec::length(realStop - markPos[0]);
+	//_signedDistanceError and _absDistanceError;
+	float realDist = vec::length(realStop - markPos[2]);
+	float rightDist = _sides[2];
+	_signedDistanceError = realDist - rightDist;
+	_absDistanceError = abs(_signedDistanceError);
+	// _signedRelativeDistError and _absRelativeDistError
+	_signedRelativeDistError = _signedDistanceError / rightDist;
+	_absRelativeDistError = abs(_signedRelativeDistError);
+	// _signedAngleError and _absAngleError
+	vec3 v1 = markPos[0] - markPos[2];
+	vec3 v2 = realStop - markPos[2];
+	_absAngleError = vec::dot(v1, v2) / (vec::length(v1) * vec::length(v2));
+	int sign = vec::cross(v1, v2).z >= 0 ? 1 : -1;
+	//TO-DO: angle sign clock/counterclockwise
+}
