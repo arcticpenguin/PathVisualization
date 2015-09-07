@@ -2,15 +2,16 @@
 #include "Path.h"
 #include "PathView.h"
 #include "Visualizer.h"
+#include "DataOutput.h"
 
 #ifdef WINDOW
 
 #define MAX_CONDITION 4
 #define MAX_TRIAL 3 //index 0,1...
 #define MAX_SUBJECT 15
-#define DATA_FOLDER "Res/RawData/Test/"
+//#define DATA_FOLDER "Res/RawData/Test/"
 //#define DATA_FOLDER "Res/RawData/First Study/"
-//#define DATA_FOLDER "Res/RawData/Second Study/"
+#define DATA_FOLDER "Res/RawData/Second Study/"
 
 int main()
 {
@@ -88,10 +89,22 @@ int main()
 	int timerEach = 5;
 	int filteredNumber = 1;
 
-	/////////////////////////////////Visualizer///////////////////////////////////
-	Visualizer visualizer(DATA_FOLDER, window);
+	DataOutput dataOutput;
 
-	visualizer.filter(4, 3, 11);
+	/////////////////////////////////Visualizer///////////////////////////////////
+	Visualizer visualizer(DATA_FOLDER, window, dataOutput);
+	
+	//output csv
+	dataOutput.flush("Res/Result/Performance.csv");
+
+	//first study test
+	visualizer.filter(7, 7, 0);//pass
+	//visualizer.filter(4, 0, 16);//pass
+	//visualizer.filter(3, 1, 23);
+	//second study test
+	//visualizer.filter(3, 3, 0);
+	//visualizer.filter(1, 0, 15);
+	//visualizer.filter(0, 2, 7);
 	//visualizer.setDrawMode("Polyline");
 	visualizer.setDrawMode("Triangle");
 

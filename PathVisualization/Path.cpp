@@ -1,6 +1,11 @@
 #include "Path.h"
 
 
+Path::Path(DataOutput& dataOutput):
+_dataOutput(dataOutput)
+{
+}
+
 void Path::reset()
 {
 		_side = -1;
@@ -108,6 +113,10 @@ void Path::readDataFromFile(string filePath)
 
 	//close file
 	infs.close();
+	//calculate
+	calculatePath();
+	//csv
+	outputCalculatedData();
 }
 
 void Path::parseTitle(string fileName)
@@ -238,32 +247,43 @@ void Path::parsePathEntry(vector<string> strEntry, int index)
 	{
 		_side = 0;
 		_timeStamp.exit[0] = index;
+		_enterExits.push_back(sf::Vector2f(point.x, point.z));
 	}
 	else if (timeFlag == "enter1")
 	{
 		_side = -1;
 		_timeStamp.enter[1] = index;
+		_enterExits.push_back(sf::Vector2f(point.x, point.z));
 	}
 	else if (timeFlag == "exit1")
 	{
 		_side = 1;
 		_timeStamp.exit[1] = index;
+		_enterExits.push_back(sf::Vector2f(point.x, point.z));
 	}
 	else if (timeFlag == "enter2")
 	{
 		_side = -1;
 		_timeStamp.enter[2] = index;
+		_enterExits.push_back(sf::Vector2f(point.x, point.z));
 	}
 	else if (timeFlag == "exit2")
 	{
 		_side = 2;
 		_timeStamp.exit[2] = index;
+		_enterExits.push_back(sf::Vector2f(point.x, point.z));
 	}
 	else if (timeFlag == "enter0")
 	{
 		_side = -1;
 		_timeStamp.enter[0] = index;
+		_enterExits.push_back(sf::Vector2f(point.x, point.z));
 	}
+}
+
+vector <sf::Vector2f> & Path::getEnterExistPoints()
+{
+	return _enterExits;
 }
 
 void Path::calculatePath()
@@ -273,7 +293,7 @@ void Path::calculatePath()
 	//S1, S2, S3, S-All, T1, T2, T3, T-All,	 
 	//Closeness, Signed Distance Error, Absolute Distance Error, Signed Relative Distance Error, Absolute Relative Distance Error, 
 	//Signed Traveled Error, Absolute Traveled Error, 
-	//Signed Angle Error, Absolute Angle Error, 
+	//Signed Angle Error_World, Signed Angle Error_Triangle, Absolute Angle Error, 
 	//Trv1, Trv2, Trv3, Trv-All
 
 	/*int _alpha;
@@ -307,6 +327,57 @@ void Path::calculatePath()
 	vec3 v1 = markPos[0] - markPos[2];
 	vec3 v2 = realStop - markPos[2];
 	_absAngleError = vec::dot(v1, v2) / (vec::length(v1) * vec::length(v2));
+	_absAngleError = acos(_absAngleError) * 180 / PI;
+	//pay attention to flipped Y axis!!!
+	//side->real path: CW+, CCW- in SFML; flipped in real
 	int sign = vec::cross(v1, v2).z >= 0 ? 1 : -1;
-	//TO-DO: angle sign clock/counterclockwise
+	_signedAngleError_World = sign * _absAngleError;
+	if ((_trialIndex % 2 == 1 && _trialIndex <= 3) || (_trialIndex % 2 == 0 && _trialIndex > 3))
+	{
+		//CCW in real, CW in SFML
+		_signedAngleError_Triangle = -_signedAngleError_World;
+	}
+	else
+	{
+		_signedAngleError_Triangle = _signedAngleError_World;
+	}
+
+}
+
+void Path::showCalculatedData()
+{
+	//Date, Time, 
+	//ID, C-Seq., C-No., T-Seq., T-No., Alpha, Dir, 
+	//S1, S2, S3, S-All, T1, T2, T3, T-All,	 
+	//Closeness, Signed Distance Error, Absolute Distance Error, Signed Relative Distance Error, Absolute Relative Distance Error, 
+	//Signed Traveled Error, Absolute Traveled Error, 
+	//Signed Angle Error, Absolute Angle Error, 
+	//Trv1, Trv2, Trv3, Trv-All
+
+	cout << "\n****************Path****************" << endl;
+	cout << "ID=" << _subjectIndex << ", C-Seq=" << _conditionSequence << ", C-No=" << _conditionIndex << ", T-Seq=" << _trialSequence << ", T-No=" << _trialIndex << endl << endl;
+	cout << "Sides: " << _sides[0] << ", " << _sides[1] << ", " << _sides[2] << ", All=" << (_sides[0] + _sides[1] + _sides[2]) << endl << endl;
+	cout << "Times: " << _times[0] << ", " << _times[1] << ", " << _times[2] << ", All=" << (_times[0] + _times[1] + _times[2]) << endl << endl;
+	cout << "Closeness=" << _closeness << ", SDE=" << _signedDistanceError << ", AbsDE=" << _absDistanceError << endl << endl;
+	cout << "SRDE=" << _signedRelativeDistError << ", AbsRDE=" << _absRelativeDistError << endl << endl;
+	cout << "STE=" << _traveledDist[2] - _sides[2] << ", AbsTE=" << abs(_traveledDist[2] - _sides[2]) << endl << endl;
+	cout << "SAE_W=" << _signedAngleError_World << ", SAE_T="<<_signedAngleError_Triangle<<", AbsAE=" << _absAngleError << endl << endl;
+	cout << "Traveled: " << _traveledDist[0] << ", " << _traveledDist[1] << ", " << _traveledDist[2] << ", All=" << (_traveledDist[0] + _traveledDist[1] + _traveledDist[2]) << endl << endl;
+	cout << "************************************"<<endl<<endl;
+}
+
+void Path::outputCalculatedData()
+{
+	ostringstream ss;
+	ss << _date << ", " << _time << ","
+		<< _subjectIndex << "," << _conditionSequence << "," << _conditionIndex << "," << _trialSequence << "," << _trialIndex << ","
+		<< _sides[0] << ", " << _sides[1] << ", " << _sides[2] << "," << (_sides[0] + _sides[1] + _sides[2]) << ","
+		<< _times[0] << ", " << _times[1] << ", " << _times[2] << "," << (_times[0] + _times[1] + _times[2]) << ","
+		<< _closeness << "," << _signedDistanceError << "," << _absDistanceError << ","
+		<< _signedRelativeDistError << "," << _absRelativeDistError << ","
+		<< _traveledDist[2] - _sides[2] << "," << abs(_traveledDist[2] - _sides[2]) << ","
+		<< _signedAngleError_World << "," << _signedAngleError_Triangle << "," << _absAngleError << ","
+		<< _traveledDist[0] << ", " << _traveledDist[1] << ", " << _traveledDist[2] << "," << (_traveledDist[0] + _traveledDist[1] + _traveledDist[2]) << "\n";
+	
+	_dataOutput.appendOutput(ss.str());
 }

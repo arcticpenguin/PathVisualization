@@ -27,6 +27,13 @@ _window(window)
 	markViews[1].setOutlineColor(sf::Color::Red);
 	markViews[2].setOutlineColor(sf::Color::Blue);
 
+	//enter/exit path
+	vector<sf::Vector2f>& enterExitPoints = _path.getEnterExistPoints();
+	for (int i = 0; i < enterExitPoints.size(); i++)
+	{
+		_eePath[i] = sf::Vertex(enterExitPoints[i], sf::Color::Red);
+	}
+
 	vector<sf::Vector2f>& points = _path.getPositions2D();
 	vector<float>& rots = _path.getRotationsY();
 	vector<float>& spds = _path.getSpeeds();
@@ -125,5 +132,6 @@ void PathView::draw(string mode) //canvas, draw type
 	for (int i = 0; i < 3; i++)
 	{
 		_window.draw(markViews[i], _transform);
+		_window.draw(_eePath, 6, sf::Lines, _transform);
 	}
 }

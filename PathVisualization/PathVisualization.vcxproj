@@ -82,6 +82,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DataOutput.cpp" />
     <ClCompile Include="DrawableLineShape.cpp" />
     <ClCompile Include="LineShape.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -91,6 +92,7 @@
     <ClCompile Include="Visualizer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataOutput.h" />
     <ClInclude Include="DrawableLineShape.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LineShape.h" />

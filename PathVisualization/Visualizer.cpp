@@ -1,13 +1,18 @@
 #include "Visualizer.h"
 
 
-Visualizer::Visualizer(string logDir, sf::RenderWindow& window) :
-_window(window)
+Visualizer::Visualizer(string logDir, sf::RenderWindow& window, DataOutput& dataOutput) :
+_window(window), _dataOutput(dataOutput)
 {
+	//csv
+	_dataOutput.appendOutput("Date, Time, ID, C-Seq., C-No., T-Seq., T-No., S1, S2, S3, S-All, T1, T2, T3, T-All,	Closeness, Signed Distance Error, Absolute Distance Error, Signed Relative Distance Error, Absolute Relative Distance Error, Signed Traveled Error, Absolute Traveled Error, SAE_W, SAE_T, Absolute Angle Error, Trv1, Trv2, Trv3, Trv-All\n");
+
 	//load files from dir
 	initPathsFromDir(logDir);
 	_currentIndex = 0;
 	_drawMode = "Triangle";
+
+	
 	
 }
 
@@ -21,7 +26,7 @@ void Visualizer::initPathsFromDir(string dir)
 	_logFiles = Utility::getAllFileNamesWithinFolder(dir);
 	for (int i = 0; i < _logFiles.size(); i++)
 	{
-		Path path;
+		Path path(_dataOutput);
 		path.readDataFromFile(dir + _logFiles[i]);
 		_paths.push_back(path);
 		
@@ -48,7 +53,10 @@ int Visualizer::filter(int conditionIndex, int trialIndex, int subjectIndex)
 		{
 			if (subjectIndex == SELECT_ALL || subjectIndex == path.getSubjectIndex())
 			{
+				//draw
 				_pathViews[i].setVisibility(true);
+				//print: TODO
+				path.showCalculatedData();
 				num++;
 			}
 			

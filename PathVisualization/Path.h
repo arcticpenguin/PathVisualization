@@ -2,6 +2,7 @@
 #define _PATH_H_
 
 #include "Utility.h"
+#include "DataOutput.h"
 
 class TimeStamp {
 public:
@@ -12,7 +13,7 @@ public:
 class Path
 {
 public:
-	Path(){}
+	Path(DataOutput& dataOutput);
 	void readDataFromFile(string filePath);
 	void reset();
 	//original
@@ -27,8 +28,11 @@ public:
 	vector<sf::Vector2f>& getMarkPositions2D();
 	vector<sf::Vector2f>& getPositions2D();
 	vector<float>& getRotationsY();
+	vector <sf::Vector2f> &getEnterExistPoints();
 	//Calculation
 	void calculatePath();
+	void showCalculatedData();
+	void outputCalculatedData();
 
 private:
 	void parsePathEntry(vector<string> strEntry, int index);
@@ -44,6 +48,8 @@ private:
 	string _date;
 	string _time;
 
+	DataOutput& _dataOutput;
+
 	//data
 	//original
 	vector<sf::Vector3f> _markPositions;
@@ -58,6 +64,7 @@ private:
 	vector<vector<string>> _pathStrData;
 	int _side;
 	TimeStamp _timeStamp;
+	vector<sf::Vector2f> _enterExits;
 	sf::Vector3f _realStop;
 	
 
@@ -71,7 +78,8 @@ private:
 	float _absDistanceError;
 	float _signedRelativeDistError;
 	float _absRelativeDistError;
-	float _signedAngleError;
+	float _signedAngleError_World;
+	float _signedAngleError_Triangle;
 	float _absAngleError;
 	float _traveledDist[3];
 	

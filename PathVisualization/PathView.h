@@ -30,6 +30,9 @@ private:
 	//triangle
 	vector<sf::ConvexShape> _orients;
 
+	//enter/exit path
+	sf::Vertex _eePath[6];
+
 	//marks
 	vector<sf::CircleShape> markViews;
 	//for transform
