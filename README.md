@@ -9,5 +9,5 @@ It can read the specified log data files generated from VR programs and produce 
 - TGUI
 - Visual Studio 2013
 
-##Future Goals
+## Future Goals
 - Multi-platform
